@@ -1,22 +1,27 @@
-import { Router,Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom"
+import { AuthProvider } from "./context/AuthContext"
 import Home from './pages/Home'
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Favorites from "./pages/Favorites";
-import Detail from "./pages/Detail";
-import Browse from "./pages/browse";
-function app(){
-  return(
+import Browse from "./pages/Browse"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import Favorites from "./pages/Favorites"
+import Detail from "./pages/Detail"
+
+function App() {
+  return (
     <BrowserRouter>
-    <routes>
-      <route path="/" element = {<Home />}></route>
-      <route path="/browse" element = {<Browse />}></route>
-      <route path="/detail" element = {<Detail />}></route>
-      <route path="/favorites" element = {<Favorites />}></route>
-      <route path="/login" element = {<Login />}></route>
-      <route path="/register" element = {<Register />}></route>
-    </routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/browse" element={<Browse />} />
+          <Route path="/recipe/:id" element={<Detail />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
-export default app;
+
+export default App
