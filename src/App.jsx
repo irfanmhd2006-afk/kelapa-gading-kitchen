@@ -6,11 +6,13 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Favorites from "./pages/Favorites"
 import Detail from "./pages/Detail"
+import Navbar from "./components/Navbar"
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/browse" element={<Browse />} />
