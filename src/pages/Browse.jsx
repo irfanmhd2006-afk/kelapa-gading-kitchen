@@ -1,46 +1,64 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react'
+import RecipeCard from '../components/RecipeCard'
+import myRecipes from '../data/myRecipes'
 
-function Browse(){
-  const[query, setQuery] = useState('') //teks yang diketik user
-  const[meals, setMeals] = useState([]) // hasil pencarian
-  const[loading ,setLoading] = useState(false)
-  const[sudahCari,setSudahCari] = useState(false) // buat tau udah pernah search
 
-  // pas pertama buka halaman, langsung search default biar gak kosong
+
+function Browse() {
+  const [query, setQuery] = useState('')
+  const [meals, setMeals] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [sudahCari, setSudahCari] = useState(false)
+
   useEffect(() => {
     searchMeals('chicken')
-  },[])
-  async function searchMeals(keyword){
+  }, [])
+
+  async function searchMeals(keyword) {
     setLoading(true)
     setSudahCari(true)
+
+    // cari dulu di resep lokal kita
+    const keyword_lower = keyword.toLowerCase()
+    const hasilLokal = myRecipes.filter(r =>
+      r.strMeal.toLowerCase().includes(keyword_lower) ||
+      r.strCategory.toLowerCase().includes(keyword_lower) ||
+      r.strArea.toLowerCase().includes(keyword_lower)
+    )
+
+    // cari juga di API TheMealDB
     try {
-      const response = await fetch('`https://www.themealdb.com/api/json/v1/1/search.php?s=${keyword}`')
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${keyword}`)
       const data = await response.json()
-      setMeals(data.meals || []) // API akan bilikin null jika gak ketemu
-    } catch (error){
-      console.log('Gagal fetch:',error)
-      setMeals([])
+      const hasilAPI = data.meals || []
+
+      // gabungkan: resep lokal duluan, baru dari API
+      setMeals([...hasilLokal, ...hasilAPI])
+    } catch (error) {
+      console.log('Gagal fetch:', error)
+      // kalau API error, tetap tampilin resep lokal
+      setMeals(hasilLokal)
     }
+
     setLoading(false)
   }
-  function handleSearchClick(){
-    if (query.trim() === '') return // jangan search kalau kotak kosong
+
+  function handleSearchClick() {
+    if (query.trim() === '') return
     searchMeals(query)
   }
-  function handleKeyDown(e){
-    if(e.key === 'Enter'){
-      handleSearchClick()
-    }
-  }
-  return(
-     <div style={{ padding: '24px', maxWidth: '1100px', margin: '0 auto' }}>
-      <h1>Cari Resep</h1>
 
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') handleSearchClick()
+  }
+
+  return (
+    <div style={{ padding: '24px', maxWidth: '1100px', margin: '0 auto' }}>
+      <h1>Cari Resep</h1>
       <div style={{ display: 'flex', gap: '10px', margin: '20px 0' }}>
         <input
           type="text"
-          placeholder="Cari nama masakan... (contoh: pasta, chicken)"
+          placeholder="Cari nama masakan... (contoh: ayam, pempek, pasta)"
           value={query}
           onChange={e => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -63,27 +81,23 @@ function Browse(){
         </p>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-        gap: '20px' }}>
-        {meals.map(meal => (
-          <Link
-            key={meal.idMeal}
-            to={`/recipe/${meal.idMeal}`}
-            style={{ textDecoration: 'none', color: 'black' }}
-          >
-            <div style={{ background: 'white', borderRadius: '12px', overflow: 'hidden',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-              <img src={meal.strMealThumb} alt={meal.strMeal}
-                style={{ width: '100%', height: '160px', objectFit: 'cover' }} />
-              <div style={{ padding: '12px' }}>
-                <h3 style={{ fontSize: '0.95rem' }}>{meal.strMeal}</h3>
-                <p style={{ fontSize: '0.8rem', color: '#888' }}>{meal.strCategory}</p>
-              </div>
-            </div>
-          </Link>
-        ))}
+      <div style={{ 
+        display: 'flex', 
+        flexWrap: 'wrap',
+        gap: '16px',
+        marginTop: '20px'
+      }}>
+      {meals.map(meal => (
+        <div className = "recipe-container" key={meal.idMeal} style={{ 
+        width: 'calc(25% - 12px)',
+        minWidth: '160px'
+      }}>
+        <RecipeCard meal={meal} />
       </div>
+  ))}
+</div>
     </div>
   )
 }
-export default Browse;
+
+export default Browse

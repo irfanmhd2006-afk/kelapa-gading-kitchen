@@ -53,7 +53,7 @@ function Detail() {
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '24px' }}>
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '24px', backgroundColor: '#fffcf2' }}>
       <button
         onClick={() => navigate(-1)}
         style={{ background: 'none', border: '2px solid #e05c2a', color: '#e05c2a',

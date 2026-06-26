@@ -137,43 +137,7 @@ Angkat, lalu goreng dengan minyak secukupnya hingga berwarna keemasan.
 
 Catatan: adonan pempek yang sudah direbus dapat disimpan di kulkas tanpa harus digoreng terlebih dahulu.`
   },
-  {
-    idMeal: 'kgk-005',
-    strMeal: 'Peyek Kacang',
-    strMealThumb: fotoPeyek,
-    strCategory: 'Snack',
-    strArea: 'Indonesia',
-    bahanBahan: [
-      '200 gram tepung beras',
-      '1 sdm (10 gram) tepung tapioka',
-      '1 butir kuning telur',
-      '300 ml air',
-      '5 lembar daun jeruk',
-      '125 gram kacang tanah',
-      '— Bumbu halus —',
-      '3 butir kemiri besar, haluskan',
-      '20 gram bawang putih, haluskan',
-      '20 gram kencur, haluskan',
-      '1½ sdt lada bubuk',
-      '½ sdt garam',
-      '1 sdt ketumbar bubuk',
-      '1 sdt kaldu bubuk (Royco)',
-      '¼ sdt kapur sirih + 2 sdm air'
-    ],
-    strInstructions: `Cara menyiapkan kacang:
-Masukkan kacang tanah ke dalam plastik, tumbuk hingga pecah, bersihkan kulitnya sekitar 50-75%, cuci secukupnya, lalu tiriskan.
-
-Cara membuat adonan:
-Campurkan semua bahan kecuali kacang tanah, aduk hingga tercampur rata dan tidak menggumpal.
-Masukkan kacang tanah ke dalam adonan, aduk perlahan.
-
-Uji rasa: goreng 1 buah peyek terlebih dahulu untuk mencicipi rasa, tambahkan garam jika kurang.
-
-Cara menggoreng:
-Panaskan minyak hingga benar-benar panas.
-Tuang satu sendok adonan di pinggir wajan, ratakan dari atas ke bawah mengikuti dinding wajan.
-Goreng hingga peyek kering dan berwarna keemasan, lalu angkat dan tiriskan.`
-  },
+  
   {
     idMeal: 'kgk-006',
     strMeal: 'Tempe Mendoan',
